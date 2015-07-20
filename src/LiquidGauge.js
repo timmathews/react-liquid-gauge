@@ -116,15 +116,16 @@ export default class LiquidGauge extends Component {
   componentDidMount() {
     const gauge = this.renderLiquidGauge("LiquidGauge", this.props.value);
 
-    //this.setState({gauge: gauge});
+    this.setState({gauge: gauge});
   }
 
-  componentDidUpdate() {
-    const gauge = this.renderLiquidGauge("LiquidGauge", this.props.value);
-
-    //this.setState({gauge: gauge});
-    
-    //gauge.update(this.props.value);
+  componentWillReceiveProps(nextProps) {
+    if(nextProps.diameter !== this.props.diameter) {
+      const gauge = this.renderLiquidGauge("LiquidGauge", this.props.value);
+      this.setState({gauge: gauge});
+    } else if(this.state !== null) {
+      this.state.gauge.update(this.props.value);
+    }
   }
 
   render() {
