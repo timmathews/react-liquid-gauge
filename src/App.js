@@ -5,7 +5,7 @@ export default class App extends Component {
   constructor(props) {
     super(props);
     this.state = {value:55.85};
-    setInterval(()=>(this.setState({value:Math.random()*100})), 500);
+    setInterval(()=>(this.setState({value:Math.random()*100})), 1500);
   }
   
   render() {

@@ -25,8 +25,8 @@
     "webpack-dev-server": "^1.8.2"
   },
   "dependencies": {
-    "react-sparkline": "~1.0.1",
-    "d3": "~3.5.6"
+    "d3": "~3.5.6",
+    "react-sparkline": "~1.0.1"
   },
   "peerDependencies": {
     "react": "*",
