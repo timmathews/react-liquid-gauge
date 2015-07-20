@@ -1,5 +1,6 @@
 import React, {Component, PropTypes} from 'react';
 import LiquidGauge from './LiquidGauge';
+import Sparkline from 'react-sparkline';
 
 export default class Gauge extends Component {
   static propTypes = {
@@ -40,7 +41,8 @@ export default class Gauge extends Component {
       width: '100%',
       maxWidth: 200,
       textAlign: 'center',
-      marginTop: 15
+      marginTop: 15,
+      color: '#178BCA'
     },
     button: {
       position: 'absolute',
@@ -80,20 +82,48 @@ export default class Gauge extends Component {
     }
   }
 
+  setShowTrendline() {
+    this.setState({showTrendline:!this.state.showTrendline});
+  }
+
+  renderSparkline() {
+    const {style} = Gauge;
+    const {history, showTrendline, width} = this.state;
+
+    if(showTrendline) {
+      return <Sparkline strokeColor={style.container.color} height={40}
+          width={width - 12} data={history} />
+    } else {
+      return null;
+    }
+  }
+
   renderObverse() {
     return (
       <div>
         <LiquidGauge value={this.props.value}
           waveAnimateTime={2000}
           waveHeight={0.075}
+          circleThickness={0.11}
+          textSize={0.8}
+          textColor={'#178BCA'}
           diameter={this.state.width - 12} />
+        {this.renderSparkline()}
         <div style={Gauge.style.label}>{this.props.label}</div>
       </div>
     );
   }
 
   renderReverse() {
-    return <h1>Reverse</h1>;
+    const {style} = Gauge;
+    const {showTrendline} = this.state;
+
+    return (
+      <div>
+        <h1 style={style.label}>Settings</h1>
+        <label for='cbx'><input type='checkbox' name='cbx' checked={showTrendline} onChange={() => this.setShowTrendline()} /> Show Trendline</label>
+      </div>
+    );
   }
 
   render() {
